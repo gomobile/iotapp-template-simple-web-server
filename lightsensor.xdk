@@ -30,6 +30,6 @@
       }
     ],
     "cordovaPlugins": [],
-    "serviceMethods": [],
+    "serviceMethods": []
   }
 }
