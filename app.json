@@ -1,0 +1,15 @@
+{
+    "repoName":"iotapp-template-simple-web-server",
+    "title":"Simple Web Server",
+    "tooltip":"A simple web server node.js application.",
+    "description":"A simple web server node.js application.",
+    "articleurl":"https://software.intel.com/en-us/xdk-sample-creating-a-web-server",
+    "screenshotUrl":"",
+    "iconUrl":"",
+    "highlights":["WiFI"],
+    "keywords":["WiFI"],
+    "visible": true,
+    "appname":"demo.simplewebserver",
+    "relname":"4.0.0",
+    "projectTypeName": "com.intel.xdk.projecttype.iotapp"
+}
