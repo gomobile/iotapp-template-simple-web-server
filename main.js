@@ -16,7 +16,7 @@ Using a ssh client:
 2. opkg update
 3. opkg upgrade
 
-Article: https://software.intel.com/en-us/html5/articles/intel-xdk-iot-edition-nodejs-templates
+Article: https://software.intel.com/en-us/xdk-sample-creating-a-web-server
 */
 
 // Set this to the ip address of your board (not 127.0.0.1)
