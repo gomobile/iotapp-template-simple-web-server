@@ -1,0 +1,29 @@
+# this is a git configuration file
+# if you do not use git this file can be ignored
+# customize this file to fit your project's needs
+
+# various always-ignore extensions
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.vi
+*~
+*.sass-cache
+
+# various OS and editor folders
+.DS_Store
+.cache
+.project
+.settings
+.tmproj
+nbproject
+Thumbs.db
+
+# non-git revision control folders
+.hg
+.svn
+.CVS

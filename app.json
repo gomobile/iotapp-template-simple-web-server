@@ -1,15 +1,15 @@
 {
-    "repoName":"iotapp-template-simple-web-server",
-    "title":"Simple Web Server",
-    "tooltip":"A simple web server node.js application.",
-    "description":"A simple web server node.js application.",
-    "articleurl":"https://software.intel.com/en-us/xdk-sample-creating-a-web-server",
-    "screenshotUrl":"",
-    "iconUrl":"",
-    "highlights":["WiFI"],
-    "keywords":["WiFI"],
-    "visible": true,
-    "appname":"demo.simplewebserver",
-    "relname":"4.0.0",
-    "projectTypeName": "com.intel.xdk.projecttype.iotapp"
+  "title":"IoT Web Server",
+  "projectTypeName": "com.intel.xdk.projecttype.iotapp",
+  "sample": false,
+  "template": true,
+  "visible" : true,
+  "sortWeight" : "0.0",
+  "repoName":"iotapp-template-simple-web-server",
+  "tooltip":"Simple web server on an IoT Node.js app.",
+  "description":"Read data from the light sensor and display the results via a browser running on a client device. This app demonstrates the use of http.createServer and fs.",
+  "articleurl":"https://software.intel.com/en-us/xdk-sample-creating-a-web-server",
+  "keywords":["analog i/o","web server"],
+  "targets": ["edison","galileo"],
+  "runtimes": ["node"]
 }
