@@ -4,8 +4,8 @@
     "creationData": {
       "projectTypeName": "com.intel.xdk.projecttype.iotapp",
       "projectGuid": "00000000-0000-0000-0000-000000000000",
-      "lastModifiedDate": 1468604788094,
-      "creationDate": 1468604785060
+      "lastModifiedDate": 1477684062145,
+      "creationDate": 1477684061071
     },
     "sourceDirectory": "",
     "cordovaPluginsDirectory": "plugins",
@@ -14,6 +14,13 @@
     "projectFiles": {},
     "projectDirectories": {
       "iot/xdk": {
+        "settings": {
+          "project": {
+            "XDK-generated": "true"
+          }
+        }
+      },
+      "xdk": {
         "settings": {
           "project": {
             "XDK-generated": "true"
