@@ -7,9 +7,9 @@
   "sortWeight" : "0.0",
   "repoName":"iotapp-template-simple-web-server",
   "tooltip":"Simple web server on an IoT Node.js app.",
-  "description":"Read data from the light sensor and display the results via a browser running on a client device. This app demonstrates the use of http.createServer and fs.",
+  "description":"Read data from the light sensor (on select Intel IoT development boards). The light sensor data values can be display in a browser that connects to a simple web server created by the IoT device. This app also demonstrates the use of the 'http.createServer' and 'fs' node modules.",
   "articleurl":"https://software.intel.com/en-us/xdk-sample-creating-a-web-server",
-  "keywords":["analog i/o","web server"],
+  "keywords":["analog i/o","web server","light sensor"],
   "targets": ["edison","galileo"],
   "runtimes": ["node"]
 }
