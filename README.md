@@ -1,6 +1,5 @@
-Intel XDK IoT Web Server Node.js App
-====================================
-
+Intel® XDK IoT Node.js\* Web Server App
+=======================================
 See [LICENSE.md](LICENSE.md) for license terms and conditions.
 
 This sample application is distributed as part of the
