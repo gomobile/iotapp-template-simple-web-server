@@ -10,8 +10,8 @@
  * https://software.intel.com/en-us/xdk/docs/using-templates-nodejs-iot
  */
 
-// spec jslint and jshint lines for desired JavaScript linting
-// see http://www.jslint.com/help.html and http://jshint.com/docs
+/* spec jslint and jshint lines for desired JavaScript linting */
+/* see http://www.jslint.com/help.html and http://jshint.com/docs */
 /* jslint node:true */
 /* jshint unused:true */
 
