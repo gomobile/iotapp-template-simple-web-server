@@ -1,23 +1,21 @@
 /*
- * Intel XDK IoT Node.js Web Server app.
- *
  * Read data from analog pins on an Intel IoT development board
  * and display the results via a browser running on a client device.
  * This app demonstrates the use of http.createServer and fs.
  *
- * This sample has only been tested on a Galileo and Edison board. It may run on
- * other IoT Node.js platforms, but may require changes to the I/O initialization
- * and configuration code.
+ * Supported Intel IoT development boards are identified in the code.
  *
- * https://software.intel.com/en-us/xdk/docs/lp-xdk-iot
- * https://software.intel.com/en-us/xdk-sample-creating-a-web-server
+ * See LICENSE.md for license terms and conditions.
+ *
+ * https://software.intel.com/en-us/xdk/docs/using-templates-nodejs-iot
  */
 
-
-// keep these lines (below) for proper jshinting and jslinting
-/*jslint node:true, vars:true, bitwise:true */
-/*jshint unused:true, undef:true */
+// spec jslint and jshint lines for desired JavaScript linting
 // see http://www.jslint.com/help.html and http://jshint.com/docs
+/* jslint node:true */
+/* jshint unused:true */
+
+"use strict" ;
 
 
 var ipAddress = '192.168.2.15' ;    // Set to IP address of your board (not 127.0.0.1)
