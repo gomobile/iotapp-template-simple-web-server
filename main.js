@@ -1,13 +1,19 @@
-/*
- * Read data from analog pins on an Intel IoT development board
- * and display the results via a browser running on a client device.
- * This app demonstrates the use of http.createServer and fs.
+/**
+ * @file
+ * This app uses the Node.js http node module to host a very simple web data
+ * server on your IoT device. This IoT web data server displays data
+ * collected by your IoT device, in the form of a JSON object. See the
+ * included README.md file for more information.
  *
- * Supported Intel IoT development boards are identified in the code.
+ * <https://software.intel.com/en-us/xdk/docs/using-templates-nodejs-iot>
  *
- * See LICENSE.md for license terms and conditions.
+ * @author Paul Fischer, Intel Corporation
+ * @author Elroy Ashtian, Intel Corporation
+ * @author Dan Yocom, Intel Corporation
  *
- * https://software.intel.com/en-us/xdk/docs/using-templates-nodejs-iot
+ * @copyright (c) 2016-2017, Intel Corporation
+ * @license BSD-3-Clause
+ * See LICENSE.md for complete license terms and conditions.
  */
 
 /* spec jslint and jshint lines for desired JavaScript linting */
@@ -18,66 +24,126 @@
 "use strict" ;
 
 
-var ipAddress = '192.168.2.15' ;    // Set to IP address of your board (not 127.0.0.1)
+var APP_NAME = "IoT Simple Web Data Server" ;
 
-var mraa = require("mraa") ;        // get mraa objecat and write version to the console
-console.log('MRAA Version: ' + mraa.getVersion()) ;
+console.log("\n\n\n\n\n\n") ;                           // poor man's clear console
+console.log("Initializing " + APP_NAME) ;
+sysIdentify() ;                                         // useful system debug info
 
-var fs = require('fs') ;            // start by loading in some data
-var lightSensorPage = fs.readFileSync('/node_app_slot/index.html') ;
+process.on("exit", function(code) {                     // define up front, due to no "hoisting"
+    clearInterval(intervalID) ;
+    console.log("\nExiting " + APP_NAME + ", with code:", code) ;
+}) ;
 
-// Insert the ip address in the code in the page
-lightSensorPage = String(lightSensorPage).replace(/<<ipAddress>>/, ipAddress);
 
-var analogPin0 = new mraa.Aio(0);
+// The following will auto-configure the ipAddress of the simple IoT web data
+// server. You can override this auto-configuration by setting ipAddress to
+// something other than "0.0.0.0" -- otherwise it will attempt to
+// automatically determine the board's ipAddress. If there is more than one
+// ipAddress available, the first ipAddress found will be used. All network
+// addresses that are found will be reported in the console.log window.
 
-/**
- * Given a value, convert it to Lux
- *
- * This uses the table given in the documentation for the
- * Grove Starter Kit Plus. We have not sought to verify these
- * values with our device. That would be worth doing if you
- * intend to rely on these values. In that case, it could also
- * be worthwhile to improve the interpolation formula
- * @param {Number} - the raw reading from the device
- */
-function getLux(analogValue) {
-  // Values taken from Grove Starter Kit for Arduino table
-  var lux;
-  var calib = [{reading:0, lux:0},
-               {reading:100, lux:0.2},  // guess - not from published table
-               {reading:200, lux:1},
-               {reading:300, lux:3},
-               {reading:400, lux:6},
-               {reading:500, lux:10},
-               {reading:600, lux:15},
-               {reading:700, lux:35},
-               {reading:800, lux:80},
-               {reading:900, lux:100}];
-  var i = 0;
-  while (i < calib.length && calib[i].reading < analogValue) {
-    i ++;
-  }
-  if (i > 0) {
-    i = i - 1;
-  }
-  // simple linear interpolation
-  lux =  (calib[i].lux *(calib[i + 1].reading - analogValue) + calib[i + 1].lux * (analogValue - calib[i].reading))/(calib[i + 1].reading - calib[i].reading);
-  return lux;
+var ipAddress = "0.0.0.0" ;     // "0.0.0.0" means monitor all network interfaces
+var ipPort = 1337 ;             // the IP port to be used by the web data server
+
+var path = require("path") ;
+var ipv4 = require(path.join(__dirname, "utl/get-ipv4-addresses.js")).getIPv4Addresses() ;
+console.log("\n" + ipv4[0] + " IPv4 network interface(s) found.") ;
+
+if( ipv4[0] > 0 ) {
+    console.log("Direct your browser to any of the following URLs:") ;
+    for( var i=ipv4[0]; i; i-- ) {
+        console.log("  http://" + ipv4[i][1] + ":" + ipPort) ;
+    }
+    console.log(" ") ;
+}
+else {
+    console.log("No network interfaces found, unable to start " + APP_NAME + ".") ;
+    console.log("This should not happen if you login to your IoT device with the Intel XDK.") ;
+    process.exit(1) ;
 }
 
-var http = require('http');
-http.createServer(function (req, res) {
-    var value;
-    // This is a very quick and dirty way of detecting a request for the page
-    // versus a request for light values
-    if (req.url.indexOf('index') != -1) {
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.end(lightSensorPage);
-    }
-    else {
-        value = analogPin0.read();
-        res.writeHead(200, {'Content-Type': 'text/json'});
-        res.end(JSON.stringify({lightLevel:getLux(value), rawValue:value}));
-    }
-}).listen(1337, ipAddress);
+
+// Now start the IoT web server and wait for page requests. Any page address
+// works, the result will always be a data response. You could implement
+// something more sophisticated (but still simple) by using something like
+// <https://www.npmjs.com/package/httpdispatcher> to implement specific
+// responses for unique URL paths (queries), which would allow you to then
+// provide a variety of data responses to specific query URLs.
+
+var http = require("http") ;
+var server = http.createServer(requestServer) ;
+
+var serverReqCount = 0 ;
+function requestServer(req, res) {
+    var dataRead = getSensorData() ;
+
+    res.writeHead(200, { "Content-Type":"text/json" }) ;
+    res.write(JSON.stringify(dataRead)) ;
+    res.end() ;
+    console.log(JSON.stringify(dataRead)) ;
+
+    serverReqCount++ ;
+}
+
+// this callback is triggered when the server is listening
+
+server.listen(ipPort, ipAddress, function() {
+    console.log("Server listening on: " + JSON.stringify(server.address())) ;
+    console.log(" ") ;
+}) ;
+
+
+
+/**
+ * Collect sensor data to be reported by the IoT web server.
+ *
+ * In order to make this app work on a wide range of IoT Node.js platforms, it
+ * does not collect real sensor data. Instead, it reports a random number and
+ * the current time as a substitute for real measured data. In a real app you
+ * would replace this "fake" data with data read from a real sensor.
+ *
+ * @return {Object} - our "fake" sensor data
+ */
+
+function getSensorData() {
+
+    var randomNum = Math.random() * 1000 ;
+    var currTime = Date.now() ;
+
+    return { randomNumber:randomNum.toFixed(3), currentTime:currTime } ;
+}
+
+
+
+/**
+ * Using standard node modules, identify platform details.
+ * Such as OS, processor, etc.
+ *
+ * Just prints info to the console...
+ *
+ * @function
+ * @return {Void}
+ */
+
+function sysIdentify() {
+
+    console.log("node version: " + process.versions.node) ;
+
+    var os = require('os') ;
+    console.log("os type: " + os.type()) ;
+    console.log("os platform: " + os.platform()) ;
+    console.log("os architecture: " + os.arch()) ;
+    console.log("os release: " + os.release()) ;
+    console.log("os hostname: " + os.hostname()) ;
+
+}
+
+
+
+// this is mostly just a "keep alive" so our web server does not terminate
+
+var periodicActivity = function() {
+    console.log("Server request count: " + serverReqCount) ;
+} ;
+var intervalID = setInterval(periodicActivity, 10000) ; // start the periodic activity

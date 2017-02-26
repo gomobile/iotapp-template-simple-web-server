@@ -1,6 +1,6 @@
 {
   "name": "xdk-iot-web-server",
-  "description": "Intel XDK IoT Web Server Node.js App",
+  "description": "Intel XDK IoT Web Data Server Node.js App",
   "version": "0.0.0",
   "main": "main.js",
   "engines": {
