@@ -33,12 +33,12 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-License Summary for `fs` and `http` Node.js Modules
-===================================================
+License Summary for `path`, `http` and `os` Node.js Modules
+===========================================================
 
-The `fs` and `http` modules are standard components in the Node.js
-runtime and are, therefore, covered by the Node.js license terms
-and conditions (the “MIT” License).
+These modules are standard components in the Node.js runtime and are,
+therefore, covered by the standard Node.js license terms and conditions (the
+“MIT” License).
 
 See <https://github.com/nodejs/node/blob/master/LICENSE> for the
 complete Node.js license terms and conditions.

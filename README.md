@@ -1,5 +1,6 @@
 Intel® XDK IoT Node.js\* Web Data Server App
 ============================================
+
 See [LICENSE.md](LICENSE.md) for license terms and conditions.
 
 This sample application is distributed as part of the
@@ -19,6 +20,7 @@ information regarding the upm sensor and actuator library APIs.
 
 App Overview
 ------------
+
 This app uses the Node.js http node module to host a very simple web data
 server on your IoT device. This IoT web data server displays data "collected"
 by your IoT device, in the form of a JSON object.
@@ -79,17 +81,20 @@ This code has been deliberately kept simple. Obvious improvements are:
 
 Important App Files
 -------------------
+
 * main.js
 * package.json
 
 Important Project Files
 -----------------------
+
 * README.md
 * LICENSE.md
 * \<project-name\>.xdk
 
 Tested IoT Node.js Platforms
 ----------------------------
+
 * [Intel® Galileo Board for Arduino](http://intel.com/galileo)
 * [Intel® Edison Board for Arduino](http://intel.com/edison)
 * [Intel® Joule™ 570x Developer Kit](http://intel.com/joule)
