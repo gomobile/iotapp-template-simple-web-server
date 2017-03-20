@@ -32,7 +32,9 @@ sysIdentify() ;                                         // useful system debug i
 
 process.on("exit", function(code) {                     // define up front, due to no "hoisting"
     clearInterval(intervalID) ;
-    console.log("\nExiting " + APP_NAME + ", with code:", code) ;
+    console.log(" ") ;
+    console.log("Exiting " + APP_NAME + ", with code:", code) ;
+    console.log(" ") ;
 }) ;
 
 
